@@ -1,0 +1,32 @@
+let add_btn = ....;
+
+add_btn.addEventListener('click', add_fun);
+function add_fun(){
+
+	let dlt_btn = ...;
+	dlt_btn.addEventListener('click', dlt_fun);
+	function dlt_fun(){}
+
+	let edit_btn = ...;
+	edit_btn.addEventListener('click', edit_fun);
+	function edit_fun(){
+
+		let edit_input = ....;
+
+		let cancel_btn = ...;
+		cancel_btn.addEventListener('click' cancel_fun);
+		function cancel_fun(){}
+
+		let save_btn = ...;
+		edit_input.addEventListener('keydown', (e) => {save_fun();}
+		save_btn.addEventListener('click', save_fun);
+		function save_fun(){
+			edit_input.removeEventListener('blur', blur_fun);
+		}
+
+		edit_input.addEventListener('blur',blur_fun);
+		function blur_fun(){cancel_fun();}
+	
+	}
+
+}
