@@ -1,20 +1,26 @@
-
-
 let input_box = document.getElementById("input-box");
 let add_btn = document.getElementById("add-btn");
 let reset_btn = document.getElementById("reset-btn");
-
 let item_field = document.getElementById("item-field");
 
+let item_num = 0;
 
-add_btn.addEventListener('click', add_fun);
-reset_btn.addEventListener('click', reset_fun);
+
+
+
+
+
+
 
 input_box.addEventListener('keydown', (e) => {
     if(e.key == "Enter"){
         add_fun();
     }
 });
+add_btn.addEventListener('click', add_fun);
+reset_btn.addEventListener('click', reset_fun);
+
+
 
 
 
@@ -43,6 +49,9 @@ function add_fun(){
 
 
         }else{
+
+
+
             let warning_text = document.getElementsByClassName('warning-text');
             for(let i = 0; i < item_field.children.length; i++){
                 for(let j = 0; j < item_field.children.length; j++){
@@ -52,38 +61,47 @@ function add_fun(){
                 }
             }
 
-            let element = document.createElement('p');
 
+            
+            let element = document.createElement('p');
+            element.classList.add(`item`, `item${item_num}`);
             let label = document.createElement('label');
             let text = document.createTextNode(input_box.value);
+            let checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            let dlt_btn = document.createElement('button');
+            let dlt_text = document.createTextNode('delete');
+            let edit_btn = document.createElement('button');
+            let edit_text = document.createTextNode('edit');
+
+
 
             label.appendChild(text);
             element.appendChild(label);
-
-            let checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-
-            let dlt_btn = document.createElement('button');
-            let dlt_text = document.createTextNode('delete');
             dlt_btn.appendChild(dlt_text);
-            dlt_btn.addEventListener('click', dlt_fun);
-
-            function dlt_fun(){
-                for(let i = 0; i < item_field.children.length; i++){
-                    if(dlt_btn.parentElement == item_field.children[i]){
-                        item_field.removeChild(item_field.children[i]);
-                    }
-                }
-            }
-
-
-            
-            
-
-            let edit_btn = document.createElement('button');
-            let edit_text = document.createTextNode('edit');
             edit_btn.appendChild(edit_text);
+
+            
+            dlt_btn.addEventListener('click', dlt_fun);
             edit_btn.addEventListener('click', edit_fun);
+
+            
+            
+
+            
+
+            element.insertAdjacentElement('afterbegin', checkbox);
+            element.insertAdjacentElement('beforeend', edit_btn);
+            element.insertAdjacentElement('beforeend', dlt_btn);
+            item_field.insertAdjacentElement("beforeend", element);
+
+            input_box.value = "";
+            input_box.focus();
+
+
+
+
+
 
             function edit_fun(){
 
@@ -95,6 +113,7 @@ function add_fun(){
 
                 for(let i = 0; i < item_field.children.length; i++){
                     if(item_field.children[i] == edit_btn.parentElement){
+
                         let item_value = edit_btn.parentElement.childNodes[1].textContent;
                         console.log(item_value);
 
@@ -113,42 +132,15 @@ function add_fun(){
                         
                         item_field.replaceChild(edit_field, item_field.children[i]);
                         edit_input.value = edit_btn.parentElement.childNodes[1].textContent;
-
                         
+                        
+
+                        edit_input.focus();
+
+
+
+
                         cancel_btn.addEventListener('click', cancel_fun);
-                        function cancel_fun(){
-                            for(let i = 0; i < item_field.children.length; i++){
-                                if(item_field.children[i] == cancel_btn.parentElement){
-                                    // let element = document.createElement('p');
-                                    // let text = document.createTextNode(item_value);
-                                    // element.appendChild(text);
-
-                                    // let checkbox = document.createElement('input');
-                                    // checkbox.type = "checkbox";
-                                    // element.insertAdjacentElement('afterbegin', checkbox);
-
-                                    // let edit_btn = document.createElement('button');
-                                    // let edit_text = document.createTextNode('edit');
-                                    // edit_btn.appendChild(edit_text);
-                                    // let delete_btn = document.createElement('button');
-                                    // let delete_text = document.createTextNode('delete');
-                                    // delete_btn.appendChild(delete_text);
-
-
-                                    // edit_btn.appendChild(edit_text);
-                                    // element.insertAdjacentElement('beforeend', edit_btn);
-                                    // element.insertAdjacentElement('beforeend', dlt_btn);
-
-
-                                    item_field.replaceChild(element, item_field.children[i]);
-                                    // edit_btn.addEventListener('click', edit_fun);
-                                }
-                            }
-                        }
-                        
-                        
-
-                        
                         edit_input.addEventListener('keydown', (e) => {
                             if(e.key == "Enter"){
                                 save_fun();
@@ -160,6 +152,22 @@ function add_fun(){
                                 save_fun();
                             }
                         });
+                        edit_input.addEventListener('blur', blur_fun);
+                        function blur_fun(){
+                            cancel_fun();
+                        }
+
+
+
+                        
+                        function cancel_fun(){
+                            for(let i = 0; i < item_field.children.length; i++){
+                                if(item_field.children[i] == cancel_btn.parentElement){
+                                    item_field.replaceChild(element, item_field.children[i]);
+                                }
+                            }
+                        }
+
                         function save_fun(){
                             edit_input.removeEventListener('blur', blur_fun);
                             for(let i = 0; i < item_field.children.length; i++){
@@ -176,57 +184,29 @@ function add_fun(){
                             }
                             
                         }
-
-                        
-
-                        edit_input.addEventListener('blur', blur_fun);
-                        function blur_fun(){
-                            cancel_fun();
-                        }
-                        
-                        
-                        
-                        
-
-
-                        edit_input.focus();
                     }
                 }
             }
 
-            element.insertAdjacentElement('afterbegin', checkbox);
-            element.insertAdjacentElement('beforeend', edit_btn);
-            element.insertAdjacentElement('beforeend', dlt_btn);
-            item_field.insertAdjacentElement("beforeend", element);
-
-            input_box.value = "";
-            input_box.focus();
+            function dlt_fun(){
+                for(let i = 0; i < item_field.children.length; i++){
+                    if(dlt_btn.parentElement == item_field.children[i]){
+                        item_field.removeChild(item_field.children[i]);
+                    }
+                }
             }
 
+
+            item_num++;
+            }
+
+
+
     }
-
-
-
-
 
 
 function reset_fun(){
     item_field.innerHTML = "";
     input_box.focus();
+    item_num = 0;
 }
-
-
-
-
-// function testing(){
-//     let element = document.createElement('button');
-//     let text = document.createTextNode('console');
-//     element.appendChild(text);
-
-//     document.getElementsByTagName('main')[0].insertAdjacentElement('beforeend', element);
-
-//     element.addEventListener('click', testing);
-// }
-
-
-// testing();
