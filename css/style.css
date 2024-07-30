@@ -32,7 +32,7 @@ main button{
     line-height: 20px;
     text-transform: capitalize;
     margin: 0 5px;
-    background-color: lightgreen;
+    background-color: rgb(255, 255, 255);
     cursor: pointer;
 }
 main input{
@@ -43,7 +43,7 @@ main input{
     border-radius: 5px;
 }
 main #input-and-btns{
-    background-color: rgb(90, 78, 255);
+    background-color: rgba(89, 0, 255, 0.718);
     padding: 20px;
 
     display: flex;
@@ -53,10 +53,14 @@ main #input-and-btns input{
     margin-right: auto;
 }
 main #item-field{
-    background-color: rgba(90, 78, 255, 0.724);
+    background-color: rgba(63, 98, 211, 0.32);
+    backdrop-filter: blur(50px);
 
     display: flex;
     flex-direction: column;
+
+    height: 75vh;
+    overflow-y: auto;
 
 }
 main #item-field p{
@@ -83,8 +87,15 @@ main #item-field p input[type = "checkbox"]{
     border: none;
     margin: 0 5px;
 }
-main #item-field p input[type = "checkbox"]:checked{
-    
+
+#field-background{
+    position: absolute;
+    width: 90%;
+    max-width: 500px;
+    height: 200px;
+    background-color: rgb(136, 0, 255);
+    z-index: -5;
+    filter: blur(150px);
 }
 
 /* .btn{
@@ -96,7 +107,7 @@ main #item-field p input[type = "checkbox"]:checked{
 
 @media only screen and (max-width: 540px){
     main #input-and-btns{
-        background-color: rgb(90, 78, 255);
+        background-color: rgba(89, 0, 255, 0.718);
         padding: 20px;
     
         display: flex;
